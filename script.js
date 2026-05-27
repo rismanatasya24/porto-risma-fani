@@ -123,9 +123,7 @@ const revealTargets = [
   { selector: '.about-stat',     delay: 80,  class: 'reveal-up'    },
   { selector: '.tech-card',      delay: 50,  class: 'reveal-up'    },
   { selector: '.soft-item',      delay: 60,  class: 'reveal-up'    },
-  { selector: '.portfolio-card', delay: 100, class: 'reveal-up'    },
   { selector: '.journey-card',   delay: 80,  class: 'reveal-up'    },
-  { selector: '.gallery-item',   delay: 100, class: 'reveal-up'    },
   { selector: '.contact-item',   delay: 60,  class: 'reveal-up'    },
   { selector: '.contact-info',   delay: 0,   class: 'reveal-left'  },
   { selector: '.contact-box',    delay: 0,   class: 'reveal-right' },
@@ -151,6 +149,52 @@ revealTargets.forEach(({ selector, delay, class: animClass }) => {
 
   elements.forEach(el => obs.observe(el));
 });
+
+// ========================================
+// STAGGER DOMINO — PORTFOLIO & GALLERY
+// Tiap card punya index, muncul bergantian saat section masuk viewport
+// ========================================
+function initStagger(selector, cssClass) {
+  const cards = document.querySelectorAll(selector);
+  if (!cards.length) return;
+
+  // Set CSS custom property --i untuk delay per card
+  cards.forEach((card, i) => {
+    card.classList.add(cssClass);
+    card.style.setProperty('--i', i);
+  });
+
+  // Satu IntersectionObserver per section parent
+  // Semua card dalam section yg sama trigger bareng → stagger via --i
+  const parents = new Set([...cards].map(c => c.closest('section') || c.parentElement));
+
+  parents.forEach(parent => {
+    const parentCards = [...cards].filter(c =>
+      (c.closest('section') || c.parentElement) === parent
+    );
+
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Reset index per-section biar stagger selalu mulai dari 0
+          parentCards.forEach((card, idx) => {
+            card.style.setProperty('--i', idx);
+          });
+          // Trigger satu per satu
+          parentCards.forEach((card, idx) => {
+            setTimeout(() => card.classList.add('active'), idx * 110);
+          });
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.06, rootMargin: '0px 0px -60px 0px' });
+
+    obs.observe(parent);
+  });
+}
+
+initStagger('.portfolio-card', 'stagger-card');
+initStagger('.gallery-item',   'stagger-card');
 
 // ========================================
 // NAVBAR
@@ -598,3 +642,158 @@ window.addEventListener("scroll", rafThrottle(() => {
     link.classList.toggle("active-link", link.getAttribute("href") === `#${current}`);
   });
 }), { passive: true });
+
+// ========================================
+// COUNTER ANIMATION
+// Angka di about section naik dari 0 saat masuk viewport
+// ========================================
+function animateCounter(el, target, suffix, duration = 1600) {
+  let start = null;
+  const num = parseInt(target);
+  const step = (timestamp) => {
+    if (!start) start = timestamp;
+    const progress = Math.min((timestamp - start) / duration, 1);
+    // Easing: ease-out cubic
+    const eased = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.floor(eased * num) + suffix;
+    if (progress < 1) requestAnimationFrame(step);
+    else el.textContent = target + suffix;
+  };
+  requestAnimationFrame(step);
+}
+
+const statNums = document.querySelectorAll(".stat-num");
+let countersTriggered = false;
+
+const counterObs = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && !countersTriggered) {
+      countersTriggered = true;
+      statNums.forEach((el, i) => {
+        const raw = el.textContent.trim();       // e.g. "6+"
+        const num = raw.replace(/\D/g, "");      // "6"
+        const suffix = raw.replace(/\d/g, "");   // "+"
+        el.textContent = "0" + suffix;
+        setTimeout(() => animateCounter(el, num, suffix, 1400), i * 180);
+      });
+      counterObs.disconnect();
+    }
+  });
+}, { threshold: 0.4 });
+
+if (statNums.length) counterObs.observe(statNums[0].closest(".about-stats") || statNums[0]);
+
+// ========================================
+// BUTTON RIPPLE EFFECT
+// Gelombang muncul dari titik klik di semua .btn
+// ========================================
+document.querySelectorAll(".btn").forEach(btn => {
+  btn.addEventListener("click", function(e) {
+    // Hapus ripple lama kalau ada
+    const old = this.querySelector(".ripple-wave");
+    if (old) old.remove();
+
+    const rect = this.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height) * 2;
+    const x = e.clientX - rect.left - size / 2;
+    const y = e.clientY - rect.top  - size / 2;
+
+    const ripple = document.createElement("span");
+    ripple.className = "ripple-wave";
+    ripple.style.cssText = `
+      position: absolute;
+      width: ${size}px;
+      height: ${size}px;
+      left: ${x}px;
+      top: ${y}px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.25);
+      transform: scale(0);
+      animation: rippleAnim 0.6s cubic-bezier(.16,1,.3,1) forwards;
+      pointer-events: none;
+      z-index: 0;
+    `;
+    this.style.position = "relative";
+    this.style.overflow = "hidden";
+    this.appendChild(ripple);
+    setTimeout(() => ripple.remove(), 650);
+  });
+});
+
+// ========================================
+// FORM VALIDATION VISUAL
+// Shake + border merah + pesan error kalau input kosong
+// ========================================
+const contactForm = document.getElementById("contactForm");
+if (contactForm) {
+  // Hapus handler lama, ganti yang baru
+  const newForm = contactForm.cloneNode(true);
+  contactForm.parentNode.replaceChild(newForm, contactForm);
+
+  function showError(input, msg) {
+    input.classList.add("input-error");
+    input.classList.add("input-shake");
+    // Hapus shake setelah animasi selesai
+    setTimeout(() => input.classList.remove("input-shake"), 500);
+
+    let err = input.parentElement.querySelector(".err-msg");
+    if (!err) {
+      err = document.createElement("span");
+      err.className = "err-msg";
+      input.parentElement.appendChild(err);
+    }
+    err.textContent = msg;
+    err.style.opacity = "1";
+  }
+
+  function clearError(input) {
+    input.classList.remove("input-error");
+    const err = input.parentElement.querySelector(".err-msg");
+    if (err) err.style.opacity = "0";
+  }
+
+  // Real-time clear error saat user mulai ngetik
+  newForm.querySelectorAll("input, textarea").forEach(input => {
+    input.addEventListener("input", () => clearError(input));
+  });
+
+  newForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    let valid = true;
+
+    const nameInput  = newForm.querySelector("input[type='text']");
+    const emailInput = newForm.querySelector("input[type='email']");
+    const msgInput   = newForm.querySelector("textarea");
+
+    if (!nameInput.value.trim()) {
+      showError(nameInput, "Nama tidak boleh kosong");
+      valid = false;
+    }
+    if (!emailInput.value.trim()) {
+      showError(emailInput, "Email tidak boleh kosong");
+      valid = false;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value)) {
+      showError(emailInput, "Format email tidak valid");
+      valid = false;
+    }
+    if (!msgInput.value.trim()) {
+      showError(msgInput, "Pesan tidak boleh kosong");
+      valid = false;
+    }
+
+    if (valid) {
+      // Success state pada button
+      const btn = newForm.querySelector("button[type='submit']");
+      const orig = btn.textContent;
+      btn.textContent = "✓ Pesan Terkirim!";
+      btn.style.background = "linear-gradient(135deg, #10b981, #059669)";
+      btn.disabled = true;
+      newForm.reset();
+      setTimeout(() => {
+        btn.textContent = orig;
+        btn.style.background = "";
+        btn.disabled = false;
+      }, 3000);
+    }
+  });
+}
