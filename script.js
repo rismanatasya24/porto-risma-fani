@@ -447,6 +447,7 @@ if (slider) {
   let isDragging = false, startX, scrollLeft;
 
   slider.addEventListener("mousedown", (e) => {
+    passive:false
     isDragging = true;
     slider.classList.add("dragging");
     startX = e.pageX - slider.offsetLeft;
@@ -466,6 +467,7 @@ if (slider) {
     touchScrollLeft = slider.scrollLeft;
   }, { passive: true });
   slider.addEventListener("touchmove", (e) => {
+     passive:false
     slider.scrollLeft = touchScrollLeft + (touchStartX - e.touches[0].clientX) * 1.2;
   }, { passive: true });
 
@@ -484,6 +486,7 @@ const heroName = document.querySelector(".hero-visual");
 const sparkColors = ["#ff7ac6", "#8b5cf6", "#6ee7ff", "#fff", "#ffb3e6", "#c4b5fd"];
 
 heroName?.addEventListener("mousemove", (e) => {
+   passive:false
   for (let i = 0; i < 6; i++) {
     const spark = document.createElement("div");
     spark.classList.add("spark");
