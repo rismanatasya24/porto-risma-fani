@@ -161,7 +161,7 @@ revealTargets.forEach(({ selector, delay, class: animClass }) => {
 const navbar = document.getElementById("navbar");
 window.addEventListener("scroll", () => {
   navbar.classList.toggle("scrolled", window.scrollY > 50);
-});
+}, { passive:true });
 
 // ========================================
 // HAMBURGER
@@ -316,8 +316,8 @@ let lastTrailX = 0, lastTrailY = 0;
 window.addEventListener("mousemove", (e) => {
   mouseX = e.clientX;
   mouseY = e.clientY;
-  cursor.style.left = mouseX + "px";
-  cursor.style.top = mouseY + "px";
+  cursor.style.transform =
+  `translate3d(${mouseX}px, ${mouseY}px, 0)`;
 
   const dx = mouseX - lastTrailX;
   const dy = mouseY - lastTrailY;
@@ -359,8 +359,8 @@ window.addEventListener("mousemove", (e) => {
 function animateCursor() {
   ringX += (mouseX - ringX) * 0.14;
   ringY += (mouseY - ringY) * 0.14;
-  ring.style.left = ringX + "px";
-  ring.style.top = ringY + "px";
+  ring.style.transform =
+  `translate3d(${ringX}px, ${ringY}px, 0)`;
   requestAnimationFrame(animateCursor);
 }
 animateCursor();
