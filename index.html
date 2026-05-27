@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Risma Fani | Portfolio</title>
+
+  <link rel="preload" as="image" href="assets/images/home.png" />
+  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=1400&auto=format&fit=crop" />
+
+  <!-- FONT AWESOME -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <!-- DEVICON -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+
+  <!-- REMIX ICON -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet" />
+
+  <!-- GOOGLE FONT -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- MAIN CSS -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- FEATHER ICON -->
+  <script src="https://unpkg.com/feather-icons"></script>
+
+</head>
+
+<body>
+
+<div class="stars"></div>
+<div class="shooting-stars"></div>
+<div class="custom-cursor"></div>
+<div class="cursor-ring"></div>
+<div class="scroll-progress"></div>
+
+<!-- ======================================== -->
+<!-- LOADER — UPGRADED SINEMATIK              -->
+<!-- ======================================== -->
+<div class="page-loader">
+  <div class="loader-bg-animation">
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+  <div class="loader-glow"></div>
+
+  <!-- ORBIT RINGS -->
+  <div class="loader-orbit-wrap">
+    <div class="loader-ring loader-ring-1">
+      <span class="loader-ring-dot"></span>
+    </div>
+    <div class="loader-ring loader-ring-2">
+      <span class="loader-ring-dot loader-ring-dot-2"></span>
+    </div>
+    <div class="loader-ring loader-ring-3">
+      <span class="loader-ring-dot loader-ring-dot-3"></span>
+    </div>
+    <div class="loader-emblem"></div>
+  </div>
+
+  <div class="loader-particles"></div>
+
+  <div class="loader-text">
+    <span>WELCOME TO</span>
+    <h1>RISMA FANI</h1>
+    <p>The Creative Journey of Technology & Imagination</p>
+  </div>
+
+  <!-- PROGRESS BAR -->
+  <div class="loader-progress-wrap">
+    <div class="loader-progress-bar">
+      <div class="loader-progress-fill"></div>
+    </div>
+    <span class="loader-progress-text">LOADING UNIVERSE...</span>
+  </div>
+
+  <div class="loader-scan"></div>
+</div>
+
+<!-- BACKGROUND -->
+<div class="gradient-bg"></div>
+<canvas id="galaxy-network"></canvas>
+<div class="galaxy-particles">
+  <span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span>
+</div>
+<!-- HEADER -->
+<header>
+<!-- ======================================== -->
+<!-- NAVBAR                                   -->
+<!-- ======================================== -->
+<nav class="navbar" id="navbar">
+  <div class="nav-center">
+    <ul class="nav-links" id="primaryNavigation" aria-hidden="false">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#timeline">Journey</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+    <i class="fa-solid fa-moon"></i>
+  </button>
+
+  <button
+    class="menu-toggle"
+    type="button"
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="primaryNavigation"
+  >
+    <span aria-hidden="true"></span>
+    <span aria-hidden="true"></span>
+    <span aria-hidden="true"></span>
+  </button>
+</nav>
+</header>
+<!-- ======================================== -->
+<!-- HERO                                     -->
+<!-- ======================================== -->
+ <main>
+<section class="hero section" id="home">
+  <div class="hero-bg-text">CREATIVE UNIVERSE</div>
+
+  <div class="hero-left reveal-left">
+    <span class="badge"> Creative Technology Explorer</span>
+
+    <h1>
+      RISMA FANI <br>
+      <span class="name-line">DWI NATASYA</span>
+    </h1>
+
+    <div class="typing-wrapper">
+      <span class="line"></span>
+      <h2 id="typing"></h2>
+    </div>
+
+    <p class="hero-description">
+      Building elegant digital experiences through
+      creativity, innovation, and modern technology.
+    </p>
+
+    <div class="hero-buttons">
+      <a href="#portfolio" class="btn primary">Explore Portfolio</a>
+      <a href="assets/cv/CV-risma.pdf" download class="btn secondary">Download CV</a>
+    </div>
+  </div>
+
+  <div class="hero-right reveal-right">
+    <div class="hero-visual">
+      <div class="orbit orbit1"></div>
+      <div class="orbit orbit2"></div>
+      <div class="orbit orbit3"></div>
+      <div class="planet-orbit orbit-a">
+  <div class="planet planet-pink"></div>
+</div>
+<div class="planet-orbit orbit-b">
+  <div class="planet planet-purple"></div>
+</div>
+<div class="planet-orbit orbit-c">
+  <div class="planet planet-cyan"></div>
+</div>
+
+      <div class="floating-icon html"><i class="devicon-html5-plain colored"></i></div>
+      <div class="floating-icon css"><i class="devicon-css3-plain colored"></i></div>
+      <div class="floating-icon figma"><i class="devicon-figma-plain colored"></i></div>
+      <div class="floating-icon react"><i class="devicon-react-original colored"></i></div>
+      <div class="floating-icon python"><i class="devicon-python-plain colored"></i></div>
+      <div class="floating-icon bootstrap"><i class="devicon-laravel-plain colored"></i></div>
+      <div class="floating-icon mysql"><i class="devicon-mysql-plain colored"></i></div>
+      <div class="floating-icon firebase"><i class="devicon-firebase-plain colored"></i></div>
+
+      <img src="assets/images/home.png" class="hero-avatar" />
+    </div>
+  </div>
+</section>
+
+<!-- ======================================== -->
+<!-- ABOUT                                    -->
+<!-- ======================================== -->
+<section class="about section" id="about">
+  <div class="about-grid">
+    <div class="about-image reveal-left">
+      <img src="assets/images/about.jpg" alt="Risma Fani" />
+    </div>
+
+    <div class="about-content reveal-right">
+      <p class="about-label">ABOUT ME</p>
+      <h2 class="about-title">Creative Technology Explorer</h2>
+      <div class="about-line"></div>
+
+      <p>
+        An Information Systems student passionate about futuristic UI/UX design, creative
+        technology, and immersive digital experiences. I enjoy transforming ideas into elegant
+        interfaces that combine aesthetics, interaction, and innovation.
+      </p>
+
+      <div class="about-quote">
+        "Designing immersive digital experiences with creativity and innovation."
+      </div>
+
+      <div class="about-stats">
+        <div class="about-stat">
+          <div class="stat-num">6+</div>
+          <div class="stat-label">Organisasi</div>
+        </div>
+        <div class="about-stat">
+          <div class="stat-num">4+</div>
+          <div class="stat-label">Sertifikasi</div>
+        </div>
+        <div class="about-stat">
+          <div class="stat-num">10+</div>
+          <div class="stat-label">Projects</div>
+        </div>
+        <div class="about-stat">
+          <div class="stat-num">2+</div>
+          <div class="stat-label">Tahun Aktif</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================== -->
+<!-- SKILLS                                   -->
+<!-- ======================================== -->
+<section class="skills section" id="skills">
+  <div class="section-title">
+    <p>Skills</p>
+    <h2>My Tech Stack & Soft Skills</h2>
+  </div>
+
+  <div class="skills-section">
+    <div class="tech-marquee">
+      <div class="tech-track">
+        <div class="tech-card"><i class="devicon-html5-plain colored"></i><h3>HTML5</h3></div>
+        <div class="tech-card"><i class="devicon-css3-plain colored"></i><h3>CSS3</h3></div>
+        <div class="tech-card"><i class="devicon-javascript-plain colored"></i><h3>JavaScript</h3></div>
+        <div class="tech-card"><i class="devicon-figma-plain colored"></i><h3>Figma</h3></div>
+        <div class="tech-card"><i class="devicon-python-plain colored"></i><h3>Python</h3></div>
+        <div class="tech-card"><i class="devicon-firebase-plain colored"></i><h3>Firebase</h3></div>
+        <div class="tech-card"><i class="devicon-react-original colored"></i><h3>React</h3></div>
+        <div class="tech-card"><i class="devicon-github-original colored"></i><h3>GitHub</h3></div>
+        <!-- DUPLIKAT UNTUK LOOP -->
+        <div class="tech-card"><i class="devicon-html5-plain colored"></i><h3>HTML5</h3></div>
+        <div class="tech-card"><i class="devicon-css3-plain colored"></i><h3>CSS3</h3></div>
+        <div class="tech-card"><i class="devicon-javascript-plain colored"></i><h3>JavaScript</h3></div>
+        <div class="tech-card"><i class="devicon-figma-plain colored"></i><h3>Figma</h3></div>
+        <div class="tech-card"><i class="devicon-python-plain colored"></i><h3>Python</h3></div>
+        <div class="tech-card"><i class="devicon-firebase-plain colored"></i><h3>Firebase</h3></div>
+        <div class="tech-card"><i class="devicon-react-original colored"></i><h3>React</h3></div>
+        <div class="tech-card"><i class="devicon-github-original colored"></i><h3>GitHub</h3></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="soft-skills-wrapper">
+    <section class="soft-skills">
+      <div class="soft-skills-list">
+        <div class="soft-item"><i class="fa-solid fa-bolt"></i><span>Creative Thinking</span></div>
+        <div class="soft-item"><i class="fa-solid fa-people-group"></i><span>Leadership</span></div>
+        <div class="soft-item"><i class="fa-solid fa-comments"></i><span>Communication</span></div>
+        <div class="soft-item"><i class="fa-solid fa-rocket"></i><span>Fast Adaptability</span></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ======================================== -->
+  <!-- TIMELINE                                 -->
+  <!-- ======================================== -->
+  <section class="timeline-section" id="timeline">
+    <div class="section-title">
+      <p>Journey</p>
+      <h2>Experiences & Achievements</h2>
+      <div class="section-line"></div>
+      <div class="timeline-hint">← Swipe / Drag To Explore →</div>
+    </div>
+
+    <div class="timeline-scroll">
+      <div class="timeline-track">
+        <div class="timeline-line"></div>
+
+        <div class="journey-item top">
+          <div class="journey-card">
+            <span>NOW</span>
+            <h3>Information Systems Student</h3>
+            <p>Universitas Internasional Semen Indonesia</p>
+          </div>
+        </div>
+
+        <div class="journey-item bottom">
+          <div class="journey-card">
+            <span>2025</span>
+            <h3>Media & Creative Staff</h3>
+            <p>HIMA Sistem Informasi</p>
+          </div>
+        </div>
+
+        <div class="journey-item top">
+          <div class="journey-card">
+            <span>2025</span>
+            <h3>UI/UX Exploration</h3>
+            <p>Exploring futuristic interface and immersive experiences.</p>
+          </div>
+        </div>
+
+        <div class="journey-item bottom">
+          <div class="journey-card">
+            <span>2024</span>
+            <h3>Creative Division Staff</h3>
+            <p>BEM Fakultas Teknologi Informasi</p>
+          </div>
+        </div>
+
+        <div class="journey-item top">
+          <div class="journey-card">
+            <span>2024</span>
+            <h3>Student Senate Participant</h3>
+            <p>Campus organizational activities and collaboration.</p>
+          </div>
+        </div>
+
+        <div class="journey-item bottom">
+          <div class="journey-card">
+            <span>2023</span>
+            <h3>Freshman Orientation Committee</h3>
+            <p>Handled orientation and participant coordination.</p>
+          </div>
+        </div>
+
+        <div class="journey-item top">
+          <div class="journey-card">
+            <span>2024</span>
+            <h3>Social Media Administrator</h3>
+            <p>Managed branding visuals and digital content.</p>
+          </div>
+        </div>
+
+        <div class="journey-item bottom">
+          <div class="journey-card">
+            <span>2025</span>
+            <h3>Interactive Portfolio Development</h3>
+            <p>Creating cinematic and immersive portfolio experiences.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>
+
+<!-- ======================================== -->
+<!-- PORTFOLIO                                -->
+<!-- ======================================== -->
+<section class="portfolio section" id="portfolio">
+  <div class="section-title">
+    <p>Portofolio</p>
+    <h2>Featured Projects</h2>
+  </div>
+
+  <div class="portfolio-grid">
+
+    <!-- PROJECT 1 -->
+    <article class="portfolio-card">
+      <img src="assets/images/project1.jpg" alt="Smart Farming" />
+
+      <div class="portfolio-content">
+        <h3>Smart Farming Website</h3>
+
+        <p>
+          Modern agriculture platform helping farmers manage crops and harvest efficiently.
+        </p>
+
+        <div class="portfolio-tags">
+          <span>HTML</span>
+          <span>CSS</span>
+          <span>JavaScript</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- PROJECT 2 -->
+    <article class="portfolio-card">
+      <img src="assets/images/project2.jpg" alt="Plantation Dashboard" />
+
+      <div class="portfolio-content">
+        <h3>Plantation Dashboard</h3>
+
+        <p>
+          Interactive dashboard for monitoring digital plantation performance.
+        </p>
+
+        <div class="portfolio-tags">
+          <span>Figma</span>
+          <span>CSS</span>
+          <span>JavaScript</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- PROJECT 3 -->
+    <article class="portfolio-card">
+      <img src="assets/images/project3.jpg" alt="Finance Dashboard" />
+
+      <div class="portfolio-content">
+        <h3>Finance Dashboard</h3>
+
+        <p>
+          Modern financial dashboard with realtime data visualization.
+        </p>
+
+        <div class="portfolio-tags">
+          <span>React</span>
+          <span>API</span>
+          <span>CSS</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- PROJECT 4 -->
+    <article class="portfolio-card">
+      <img src="assets/images/project4.jpg" alt="Cinematic Portfolio" />
+
+      <div class="portfolio-content">
+        <h3>Cinematic Portfolio</h3>
+
+        <p>
+          Interactive cinematic portfolio with modern immersive animations.
+        </p>
+
+        <div class="portfolio-tags">
+          <span>HTML</span>
+          <span>CSS</span>
+          <span>GSAP</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- PROJECT 5 -->
+    <article class="portfolio-card">
+      <img src="assets/images/project5.jpg" alt="Mobile UI Design" />
+
+      <div class="portfolio-content">
+        <h3>Mobile UI Design</h3>
+
+        <p>
+          Clean mobile interface focused on modern user experience and interaction.
+        </p>
+
+        <div class="portfolio-tags">
+          <span>Figma</span>
+          <span>UIUX</span>
+          <span>Prototype</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- PROJECT 6 -->
+    <article class="portfolio-card">
+      <img src="assets/images/project6.jpg" alt="Company Profile" />
+
+      <div class="portfolio-content">
+        <h3>Company Profile</h3>
+
+        <p>
+          Premium company profile website with clean and modern visual design.
+        </p>
+
+        <div class="portfolio-tags">
+          <span>Laravel</span>
+          <span>PHP</span>
+          <span>MySQL</span>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ======================================== -->
+<!-- GALLERY                                  -->
+<!-- ======================================== -->
+<section class="gallery-section section" id="gallery">
+  <div class="section-title">
+    <p>Gallery</p>
+    <h2>Moments & Memories</h2>
+  </div>
+
+  <div class="gallery-grid">
+
+    <!-- Ganti src foto dengan foto kamu sendiri -->
+    <!-- Format: assets/images/gallery1.jpg dst  -->
+<div class="gallery-item" data-src="assets/images/gallery1.jpg" data-caption="Corporate Office Aesthetic">
+
+  <img src="assets/images/gallery1.jpg" alt="Office Look"
+       onerror="this.outerHTML='<div class=\'gallery-placeholder\'><i class=\'fa-regular fa-image\'></i><span>gallery1.jpg</span></div>'" />
+
+  <div class="gallery-overlay">
+    <span class="gallery-tag">✦ MOMENT</span>
+    <span class="gallery-caption">
+      ✨ Corporate Office Aesthetic
+    </span>
+  </div>
+
+  <div class="gallery-zoom-icon">
+    <i class="fa-solid fa-magnifying-glass-plus"></i>
+  </div>
+
+</div>
+
+
+<div class="gallery-item" data-src="assets/images/gallery2.jpg" data-caption="PKKMB UISI Journey">
+
+  <img src="assets/images/gallery2.jpg" alt="PKKMB UISI"
+       onerror="this.outerHTML='<div class=\'gallery-placeholder\'><i class=\'fa-regular fa-image\'></i><span>gallery2.jpg</span></div>'" />
+
+  <div class="gallery-overlay">
+    <span class="gallery-tag">✦ COMMITTEE</span>
+    <span class="gallery-caption">
+      🚀 PKKMB UISI Journey
+    </span>
+  </div>
+
+  <div class="gallery-zoom-icon">
+    <i class="fa-solid fa-magnifying-glass-plus"></i>
+  </div>
+
+</div>
+
+
+<div class="gallery-item" data-src="assets/images/gallery3.jpg" data-caption="Vision Beyond 2024">
+
+  <img src="assets/images/gallery3.jpg" alt="Vision Beyond"
+       onerror="this.outerHTML='<div class=\'gallery-placeholder\'><i class=\'fa-regular fa-image\'></i><span>gallery3.jpg</span></div>'" />
+
+  <div class="gallery-overlay">
+    <span class="gallery-tag">✦ EVENT</span>
+    <span class="gallery-caption">
+      🌌 Vision Beyond 2024
+    </span>
+  </div>
+
+  <div class="gallery-zoom-icon">
+    <i class="fa-solid fa-magnifying-glass-plus"></i>
+  </div>
+
+</div>
+
+
+<div class="gallery-item" data-src="assets/images/gallery4.jpg" data-caption="Favorite Educational Games">
+
+  <img src="assets/images/gallery4.jpg" alt="Educational Games"
+       onerror="this.outerHTML='<div class=\'gallery-placeholder\'><i class=\'fa-regular fa-image\'></i><span>gallery4.jpg</span></div>'" />
+
+  <div class="gallery-overlay">
+    <span class="gallery-tag">✦ MOMENT</span>
+    <span class="gallery-caption">
+      🎮 Favorite Educational Games
+    </span>
+  </div>
+
+  <div class="gallery-zoom-icon">
+    <i class="fa-solid fa-magnifying-glass-plus"></i>
+  </div>
+
+</div>
+
+
+<div class="gallery-item" data-src="assets/images/gallery5.jpg" data-caption="BEM UISI Experience">
+
+  <img src="assets/images/gallery5.jpg" alt="BEM UISI"
+       onerror="this.outerHTML='<div class=\'gallery-placeholder\'><i class=\'fa-regular fa-image\'></i><span>gallery5.jpg</span></div>'" />
+
+  <div class="gallery-overlay">
+    <span class="gallery-tag">✦ ORGANIZATION</span>
+    <span class="gallery-caption">
+      💫 BEM UISI Experience
+    </span>
+  </div>
+
+  <div class="gallery-zoom-icon">
+    <i class="fa-solid fa-magnifying-glass-plus"></i>
+  </div>
+
+</div>
+
+
+<div class="gallery-item" data-src="assets/images/gallery6.jpg" data-caption="Nexatera Committee 2025–2026">
+
+  <img src="assets/images/gallery6.jpg" alt="Nexatera"
+       onerror="this.outerHTML='<div class=\'gallery-placeholder\'><i class=\'fa-regular fa-image\'></i><span>gallery6.jpg</span></div>'" />
+
+  <div class="gallery-overlay">
+    <span class="gallery-tag">✦ EVENT</span>
+    <span class="gallery-caption">
+      🪐 Nexatera Committee 2025–2026
+    </span>
+  </div>
+
+  <div class="gallery-zoom-icon">
+    <i class="fa-solid fa-magnifying-glass-plus"></i>
+  </div>
+
+</div>
+
+  </div>
+</section>
+
+<!-- ======================================== -->
+<!-- CONTACT                                  -->
+<!-- ======================================== -->
+<section class="contact section" id="contact">
+  <div class="section-title reveal-zoom">
+    <p>CONTACT</p>
+    <h2>Let's Build Something Amazing</h2>
+  </div>
+
+  <div class="contact-layout">
+
+    <div class="glass contact-info reveal-left">
+      <h3>Get In Touch</h3>
+      <p>Terbuka untuk kolaborasi, proyek kreatif, atau diskusi teknologi.</p>
+
+      <a href="mailto:risma.natasya24@student.uisi.ac.id" class="contact-item">
+        <div class="contact-icon-wrap ci-email"><i data-feather="mail"></i></div>
+        <div>
+          <span class="ci-label">Email</span>
+          <span class="ci-value">risma.natasya24@student.uisi.ac.id</span>
+        </div>
+      </a>
+
+      <a href="https://instagram.com/rismaa.fn" target="_blank" class="contact-item">
+        <div class="contact-icon-wrap ci-ig"><i data-feather="instagram"></i></div>
+        <div>
+          <span class="ci-label">Instagram</span>
+          <span class="ci-value">@rismaa.fn</span>
+        </div>
+      </a>
+
+      <a href="https://wa.me/6285748231593" target="_blank" class="contact-item">
+        <div class="contact-icon-wrap ci-wa"><i data-feather="message-circle"></i></div>
+        <div>
+          <span class="ci-label">WhatsApp</span>
+          <span class="ci-value">+62 857-4823-1593</span>
+        </div>
+      </a>
+
+      <a href="https://linkedin.com/in/risma-fani-dwi-natasya" target="_blank" class="contact-item">
+        <div class="contact-icon-wrap ci-li"><i data-feather="linkedin"></i></div>
+        <div>
+          <span class="ci-label">LinkedIn</span>
+          <span class="ci-value">Risma Fani Dwi Natasya</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="glass contact-box reveal-right">
+      <form id="contactForm">
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" required />
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" required />
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea required></textarea>
+        </div>
+        <button type="submit" class="btn primary">Send Message</button>
+        <p class="form-note">
+          ✦ I'll get back to you within 1–2 days. Can't wait?
+          <a href="https://wa.me/6285748231593" target="_blank">Chat via WhatsApp</a>
+        </p>
+      </form>
+    </div>
+
+  </div>
+</section>
+</main>
+<!-- ======================================== -->
+<!-- FOOTER                                   -->
+<!-- ======================================== -->
+<footer class="footer">
+  © 2026 Risma Fani — Crafted with Passion & Creativity ✨
+</footer>
+
+<script src="script.js"></script>
+<script>feather.replace();</script>
+
+</body>
+</html>
