@@ -747,7 +747,7 @@ document.querySelectorAll(".btn").forEach(btn => {
   const loader = document.querySelector('.page-loader');
   if (loader) {
     setTimeout(() => {
-      loader.style.transition = 'opacity 0.6s ease';
+      loader.style.transition = 'opacity 0.3s ease';
       loader.style.opacity    = '0';
       setTimeout(() => loader.remove(), 600);
       document.body.classList.remove('loading');
