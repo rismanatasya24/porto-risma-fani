@@ -749,15 +749,9 @@ document.querySelectorAll(".btn").forEach(btn => {
   const canvas = document.getElementById('galaxy-network');
   if (canvas) canvas.style.display = 'none';
 
-  // Sembunyikan shooting stars element langsung
-  const shootingStars = document.querySelector('.shooting-stars');
-  if (shootingStars) shootingStars.style.display = 'none';
-
-  // Matikan animasi berat via style
+  // Matikan animasi berat via style (shooting stars tetap tampil)
   const style = document.createElement('style');
   style.textContent = `
-    .shooting-stars::before,
-    .shooting-stars::after { animation: none !important; display: none !important; }
     .stars, .stars::before, .stars::after { animation: none !important; }
     .gradient-bg::before, .gradient-bg::after { animation: none !important; }
     body::after { animation: none !important; display: none !important; }
