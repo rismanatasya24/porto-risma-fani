@@ -733,12 +733,13 @@ document.querySelectorAll(".btn").forEach(btn => {
     return false;
   });
 })();
+
 // ========================================
 // MOBILE PERFORMANCE OPTIMIZER
 // ========================================
 (function optimizeMobile() {
   const isAndroid = /Android/i.test(navigator.userAgent);
-  const isLowEnd  = navigator.hardwareConcurrency <= 4 || 
+  const isLowEnd  = navigator.hardwareConcurrency <= 4 ||
                     navigator.deviceMemory <= 2 ||
                     isAndroid;
 
@@ -747,6 +748,10 @@ document.querySelectorAll(".btn").forEach(btn => {
   // Matikan canvas galaxy
   const canvas = document.getElementById('galaxy-network');
   if (canvas) canvas.style.display = 'none';
+
+  // Sembunyikan shooting stars element langsung
+  const shootingStars = document.querySelector('.shooting-stars');
+  if (shootingStars) shootingStars.style.display = 'none';
 
   // Matikan animasi berat via style
   const style = document.createElement('style');
