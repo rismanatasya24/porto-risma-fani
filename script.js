@@ -744,42 +744,28 @@ document.querySelectorAll(".btn").forEach(btn => {
 
   if (!isLowEnd) return;
 
-  const loader = document.querySelector('.page-loader');
-  if (loader) {
-    setTimeout(() => {
-      loader.style.transition = 'opacity 0.3s ease';
-      loader.style.opacity    = '0';
-      setTimeout(() => loader.remove(), 600);
-      document.body.classList.remove('loading');
-    }, 2200); 
-  }
-  const heavy = [
-    '.loader-ring-2',
-    '.loader-ring-3',
-    '.loader-scan',
-    '.loader-bg-animation',
-    '.loader-glow',
-  ];
-  heavy.forEach(sel => {
-    const el = document.querySelector(sel);
-    if (el) el.style.display = 'none';
-  });
+  // Matikan canvas galaxy
   const canvas = document.getElementById('galaxy-network');
   if (canvas) canvas.style.display = 'none';
+
+  // Matikan animasi berat via style
   const style = document.createElement('style');
   style.textContent = `
     .shooting-stars::before,
     .shooting-stars::after { animation: none !important; display: none !important; }
     .stars, .stars::before, .stars::after { animation: none !important; }
-    .gradient-bg, .gradient-bg::before, .gradient-bg::after { animation: none !important; }
+    .gradient-bg::before, .gradient-bg::after { animation: none !important; }
     body::after { animation: none !important; display: none !important; }
-    .loader-emblem { animation: none !important; }
     .about-image::before { animation: none !important; }
     .orbit::before { animation: none !important; }
   `;
   document.head.appendChild(style);
 
 })();
+
+// ========================================
+// PORTFOLIO & GALLERY STAGGER PER CARD
+// ========================================
 (function staggerCards() {
   const obs = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -797,10 +783,10 @@ document.querySelectorAll(".btn").forEach(btn => {
 
   [...document.querySelectorAll('.portfolio-card, .gallery-item')]
     .forEach((card, i) => {
-      card.dataset.staggerIndex  = i;
-      card.style.opacity         = '0';
-      card.style.transform       = 'translateY(40px) scale(0.97)';
-      card.style.transition      = 'opacity 0.6s ease, transform 0.6s ease';
+      card.dataset.staggerIndex = i;
+      card.style.opacity        = '0';
+      card.style.transform      = 'translateY(40px) scale(0.97)';
+      card.style.transition     = 'opacity 0.6s ease, transform 0.6s ease';
       obs.observe(card);
     });
 })();
