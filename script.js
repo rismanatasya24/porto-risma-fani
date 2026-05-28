@@ -780,7 +780,7 @@ document.querySelectorAll(".btn").forEach(btn => {
         setTimeout(() => {
           card.style.opacity   = '1';
           card.style.transform = 'translateY(0) scale(1)';
-        }, index * 100);
+        }, index * 80);
         obs.unobserve(card);
       }
     });
