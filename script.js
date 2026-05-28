@@ -3,7 +3,6 @@
 // ========================================
 const isMobile = () => window.innerWidth <= 900 || ('ontouchstart' in window);
 
-// Throttle: panggil fn max sekali per `limit` ms
 function throttle(fn, limit) {
   let last = 0;
   return function (...args) {
@@ -12,7 +11,6 @@ function throttle(fn, limit) {
   };
 }
 
-// RAF-gated: jadwalkan fn di frame berikutnya, skip jika sudah pending
 function rafThrottle(fn) {
   let pending = false;
   return function (...args) {
@@ -26,8 +24,8 @@ function rafThrottle(fn) {
 // PAGE LOADER + TEXT SCRAMBLE
 // ========================================
 window.addEventListener("load", () => {
-  const loader    = document.querySelector(".page-loader");
-  const hero      = document.querySelector(".hero");
+  const loader         = document.querySelector(".page-loader");
+  const hero           = document.querySelector(".hero");
   const scrambleTarget = document.querySelector(".loader-text h1");
 
   hero.style.opacity   = "0";
@@ -35,43 +33,34 @@ window.addEventListener("load", () => {
   hero.style.filter    = "blur(6px)";
   document.body.classList.add("loading");
 
-  // TEXT SCRAMBLE — dipercepat & pakai rAF agar tidak block
   const scramble = (el, finalText, duration = 1400) => {
     const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%&*";
     const total = Math.round(duration / 30);
     let frame = 0;
-    let rafId;
-
     const step = () => {
-      el.textContent = finalText
-        .split("")
-        .map((char, i) => {
-          if (char === " ") return " ";
-          if (frame / total > i / finalText.length) return char;
-          return chars[(Math.random() * chars.length) | 0];
-        })
-        .join("");
+      el.textContent = finalText.split("").map((char, i) => {
+        if (char === " ") return " ";
+        if (frame / total > i / finalText.length) return char;
+        return chars[(Math.random() * chars.length) | 0];
+      }).join("");
       frame++;
-      if (frame < total) rafId = requestAnimationFrame(step);
+      if (frame < total) requestAnimationFrame(step);
       else el.textContent = finalText;
     };
-    rafId = requestAnimationFrame(step);
+    requestAnimationFrame(step);
   };
 
   setTimeout(() => {
     if (scrambleTarget) scramble(scrambleTarget, "RISMA FANI", 1400);
   }, 400);
 
-  // Loader hide dipercepat: 2400ms (was 2800ms)
   setTimeout(() => {
     loader.style.transition = "opacity 1.2s cubic-bezier(.22,1,.36,1)";
     loader.style.opacity    = "0";
-
-    hero.style.transition = "all 1.4s cubic-bezier(.22,1,.36,1)";
-    hero.style.opacity    = "1";
-    hero.style.transform  = "translateY(0)";
-    hero.style.filter     = "blur(0px)";
-
+    hero.style.transition   = "all 1.4s cubic-bezier(.22,1,.36,1)";
+    hero.style.opacity      = "1";
+    hero.style.transform    = "translateY(0)";
+    hero.style.filter       = "blur(0px)";
     setTimeout(() => {
       loader.remove();
       document.body.classList.remove("loading");
@@ -90,7 +79,6 @@ let count = 0, index = 0;
   const currentText = text[count];
   const letter = currentText.slice(0, ++index);
   document.getElementById("typing").textContent = letter;
-
   if (letter.length === currentText.length) {
     count++; index = 0;
     setTimeout(type, 1500);
@@ -109,7 +97,7 @@ const revealObs = new IntersectionObserver((entries) => {
   entries.forEach((entry, i) => {
     if (entry.isIntersecting) {
       setTimeout(() => entry.target.classList.add("active"), i * 120);
-      revealObs.unobserve(entry.target); // unobserve setelah active
+      revealObs.unobserve(entry.target);
     }
   });
 }, { threshold: .12 });
@@ -119,15 +107,15 @@ reveals.forEach(el => revealObs.observe(el));
 // UNIVERSAL SCROLL REVEAL
 // ========================================
 const revealTargets = [
-  { selector: '.section-title',  delay: 0,   class: 'reveal-up'    },
-  { selector: '.about-stat',     delay: 80,  class: 'reveal-up'    },
-  { selector: '.tech-card',      delay: 50,  class: 'reveal-up'    },
-  { selector: '.soft-item',      delay: 60,  class: 'reveal-up'    },
-  { selector: '.journey-card',   delay: 80,  class: 'reveal-up'    },
-  { selector: '.contact-item',   delay: 60,  class: 'reveal-up'    },
-  { selector: '.contact-info',   delay: 0,   class: 'reveal-left'  },
-  { selector: '.contact-box',    delay: 0,   class: 'reveal-right' },
-  { selector: '.footer',         delay: 0,   class: 'reveal-up'    },
+  { selector: '.section-title', delay: 0,  class: 'reveal-up'    },
+  { selector: '.about-stat',    delay: 80, class: 'reveal-up'    },
+  { selector: '.tech-card',     delay: 50, class: 'reveal-up'    },
+  { selector: '.soft-item',     delay: 60, class: 'reveal-up'    },
+  { selector: '.journey-card',  delay: 80, class: 'reveal-up'    },
+  { selector: '.contact-item',  delay: 60, class: 'reveal-up'    },
+  { selector: '.contact-info',  delay: 0,  class: 'reveal-left'  },
+  { selector: '.contact-box',   delay: 0,  class: 'reveal-right' },
+  { selector: '.footer',        delay: 0,  class: 'reveal-up'    },
 ];
 
 revealTargets.forEach(({ selector, delay, class: animClass }) => {
@@ -137,7 +125,6 @@ revealTargets.forEach(({ selector, delay, class: animClass }) => {
       .some(c => el.classList.contains(c));
     if (!already) el.classList.add(animClass);
   });
-
   const obs = new IntersectionObserver((entries) => {
     entries.forEach((entry, i) => {
       if (entry.isIntersecting) {
@@ -146,41 +133,28 @@ revealTargets.forEach(({ selector, delay, class: animClass }) => {
       }
     });
   }, { threshold: 0.08 });
-
   elements.forEach(el => obs.observe(el));
 });
 
 // ========================================
-// STAGGER DOMINO — PORTFOLIO & GALLERY
-// Tiap card punya index, muncul bergantian saat section masuk viewport
+// STAGGER DOMINO
 // ========================================
 function initStagger(selector, cssClass) {
   const cards = document.querySelectorAll(selector);
   if (!cards.length) return;
-
-  // Set CSS custom property --i untuk delay per card
   cards.forEach((card, i) => {
     card.classList.add(cssClass);
     card.style.setProperty('--i', i);
   });
-
-  // Satu IntersectionObserver per section parent
-  // Semua card dalam section yg sama trigger bareng → stagger via --i
   const parents = new Set([...cards].map(c => c.closest('section') || c.parentElement));
-
   parents.forEach(parent => {
     const parentCards = [...cards].filter(c =>
       (c.closest('section') || c.parentElement) === parent
     );
-
     const obs = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          // Reset index per-section biar stagger selalu mulai dari 0
-          parentCards.forEach((card, idx) => {
-            card.style.setProperty('--i', idx);
-          });
-          // Trigger satu per satu
+          parentCards.forEach((card, idx) => card.style.setProperty('--i', idx));
           parentCards.forEach((card, idx) => {
             setTimeout(() => card.classList.add('active'), idx * 110);
           });
@@ -188,16 +162,14 @@ function initStagger(selector, cssClass) {
         }
       });
     }, { threshold: 0.06, rootMargin: '0px 0px -60px 0px' });
-
     obs.observe(parent);
   });
 }
-
 initStagger('.portfolio-card', 'stagger-card');
 initStagger('.gallery-item',   'stagger-card');
 
 // ========================================
-// NAVBAR
+// NAVBAR SCROLL
 // ========================================
 const navbar = document.getElementById("navbar");
 window.addEventListener("scroll", rafThrottle(() => {
@@ -205,7 +177,7 @@ window.addEventListener("scroll", rafThrottle(() => {
 }), { passive: true });
 
 // ========================================
-// HAMBURGER
+// HAMBURGER MENU
 // ========================================
 const menuToggle = document.querySelector(".menu-toggle");
 const navLinks   = document.querySelector(".nav-links");
@@ -234,7 +206,8 @@ menuToggle.addEventListener("click", (e) => {
 navItems.forEach(link => link.addEventListener("click", closeMenu));
 window.addEventListener("resize", () => {
   if (window.innerWidth > 900) closeMenu();
-  else if (!navLinks.classList.contains("active")) navLinks.setAttribute("aria-hidden", "true");
+  else if (!navLinks.classList.contains("active"))
+    navLinks.setAttribute("aria-hidden", "true");
 });
 document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeMenu(); });
 document.addEventListener("click", (e) => {
@@ -244,17 +217,17 @@ document.addEventListener("click", (e) => {
 });
 
 // ========================================
-// THEME
+// THEME TOGGLE
 // ========================================
-const toggle = document.getElementById("themeToggle");
-toggle.addEventListener("click", () => {
+const themeToggle = document.getElementById("themeToggle");
+themeToggle.addEventListener("click", () => {
   document.body.classList.toggle("light");
   localStorage.setItem("theme", document.body.classList.contains("light") ? "light" : "dark");
 });
 if (localStorage.getItem("theme") === "light") document.body.classList.add("light");
 
 // ========================================
-// SCROLL PROGRESS
+// SCROLL PROGRESS BAR
 // ========================================
 const progress = document.querySelector(".scroll-progress");
 window.addEventListener("scroll", rafThrottle(() => {
@@ -263,16 +236,13 @@ window.addEventListener("scroll", rafThrottle(() => {
 }), { passive: true });
 
 // ========================================
-// GALAXY NETWORK — dioptimasi O(n²) → hanya render kalau visible
+// GALAXY NETWORK CANVAS
 // ========================================
 const galaxyCanvas = document.getElementById("galaxy-network");
 const gtx = galaxyCanvas.getContext("2d");
 let galaxyVisible = true;
 
-// Hanya animasikan kalau tab visible
-document.addEventListener("visibilitychange", () => {
-  galaxyVisible = !document.hidden;
-});
+document.addEventListener("visibilitychange", () => { galaxyVisible = !document.hidden; });
 
 function resizeGalaxy() {
   galaxyCanvas.width  = window.innerWidth;
@@ -281,7 +251,6 @@ function resizeGalaxy() {
 resizeGalaxy();
 window.addEventListener("resize", throttle(resizeGalaxy, 300));
 
-// Kurangi jumlah partikel di mobile (was 45 di semua device)
 const PARTICLE_COUNT = isMobile() ? 18 : 35;
 const galaxyParticles = [];
 for (let i = 0; i < PARTICLE_COUNT; i++) {
@@ -293,31 +262,22 @@ for (let i = 0; i < PARTICLE_COUNT; i++) {
     size: Math.random() * 1.8 + 0.8
   });
 }
-
-// Jarak koneksi dikurangi mobile
 const CONNECT_DIST = isMobile() ? 90 : 130;
 
 function animateGalaxy() {
   if (!galaxyVisible) { requestAnimationFrame(animateGalaxy); return; }
-
   gtx.clearRect(0, 0, galaxyCanvas.width, galaxyCanvas.height);
-
   const len = galaxyParticles.length;
-
-  // Update posisi
   for (let i = 0; i < len; i++) {
     const p = galaxyParticles[i];
     p.x += p.vx; p.y += p.vy;
     if (p.x < 0 || p.x > galaxyCanvas.width)  p.vx *= -1;
     if (p.y < 0 || p.y > galaxyCanvas.height)  p.vy *= -1;
-
     gtx.beginPath();
     gtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
     gtx.fillStyle = "rgba(180,120,255,.75)";
     gtx.fill();
   }
-
-  // Koneksi antar partikel — hanya kalau jarak cukup dekat
   const distSq = CONNECT_DIST * CONNECT_DIST;
   for (let a = 0; a < len - 1; a++) {
     for (let b = a + 1; b < len; b++) {
@@ -340,49 +300,41 @@ function animateGalaxy() {
 animateGalaxy();
 
 // ========================================
-// CUSTOM CURSOR + STARDUST TRAIL — hanya desktop
+// CUSTOM CURSOR + STARDUST (desktop only)
 // ========================================
 if (!isMobile()) {
   const cursor = document.querySelector(".custom-cursor");
   const ring   = document.querySelector(".cursor-ring");
   let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
-
   const trailColors = ["#ff7ac6","#c4b5fd","#6ee7ff","#ffffff","#ffb3e6","#a78bfa"];
-  const MAX_TRAIL   = 14; // was 22
+  const MAX_TRAIL   = 14;
   const trailPool   = [];
-
   for (let i = 0; i < MAX_TRAIL; i++) {
     const dot = document.createElement("div");
     dot.classList.add("stardust-dot");
     document.body.appendChild(dot);
     trailPool.push(dot);
   }
-
   let trailIndex = 0, lastTrailX = 0, lastTrailY = 0;
-
   window.addEventListener("mousemove", throttle((e) => {
     mouseX = e.clientX; mouseY = e.clientY;
     cursor.style.transform = `translate3d(${mouseX}px,${mouseY}px,0)`;
-
     const dx = mouseX - lastTrailX, dy = mouseY - lastTrailY;
-    if (dx * dx + dy * dy > 100) { // jarak > 10px (was 8px)
+    if (dx * dx + dy * dy > 100) {
       lastTrailX = mouseX; lastTrailY = mouseY;
       const dot   = trailPool[trailIndex % MAX_TRAIL]; trailIndex++;
       const size  = 4 + Math.random() * 4;
       const color = trailColors[(Math.random() * trailColors.length) | 0];
       const ox    = (Math.random() - .5) * 10, oy = (Math.random() - .5) * 10;
-
       dot.style.cssText = `width:${size}px;height:${size}px;left:${mouseX+ox}px;top:${mouseY+oy}px;background:${color};box-shadow:0 0 ${size*2}px ${color};opacity:1;transform:translate(-50%,-50%) scale(1);`;
       dot.classList.add("stardust-active");
-
       setTimeout(() => {
         dot.style.opacity   = "0";
         dot.style.transform = "translate(-50%,-50%) scale(0)";
         setTimeout(() => dot.classList.remove("stardust-active"), 350);
       }, 60);
     }
-  }, 16)); // ~60fps throttle
-
+  }, 16));
   function animateCursor() {
     ringX += (mouseX - ringX) * 0.14;
     ringY += (mouseY - ringY) * 0.14;
@@ -390,15 +342,14 @@ if (!isMobile()) {
     requestAnimationFrame(animateCursor);
   }
   animateCursor();
-
-  document.querySelectorAll("a, button, .project-card, .timeline-card, .soft-card, .tech-card").forEach(item => {
+  document.querySelectorAll("a, button, .tech-card").forEach(item => {
     item.addEventListener("mouseenter", () => { cursor.classList.add("cursor-hover"); ring.classList.add("cursor-ring-hover"); });
     item.addEventListener("mouseleave", () => { cursor.classList.remove("cursor-hover"); ring.classList.remove("cursor-ring-hover"); });
   });
 }
 
 // ========================================
-// MAGNETIC BUTTON EFFECT — hanya desktop
+// MAGNETIC BUTTON (desktop only)
 // ========================================
 if (!isMobile()) {
   document.querySelectorAll(".btn.primary, .btn.secondary").forEach(btn => {
@@ -408,7 +359,6 @@ if (!isMobile()) {
       const dy = (e.clientY - rect.top  - rect.height / 2) * 0.3;
       btn.style.transform = `translate(${dx}px,${dy}px) translateY(-5px)`;
     }, 16));
-
     btn.addEventListener("mouseleave", () => {
       btn.style.transform  = "";
       btn.style.transition = "transform .5s cubic-bezier(.22,1,.36,1), box-shadow .4s ease";
@@ -420,12 +370,12 @@ if (!isMobile()) {
 }
 
 // ========================================
-// PARALLAX — hanya desktop, RAF-throttled
+// PARALLAX (desktop only)
 // ========================================
-const heroAvatar    = document.querySelector(".hero-avatar");
-const orbit1El      = document.querySelector(".orbit1");
-const orbit2El      = document.querySelector(".orbit2");
-const orbit3El      = document.querySelector(".orbit3");
+const heroAvatar = document.querySelector(".hero-avatar");
+const orbit1El   = document.querySelector(".orbit1");
+const orbit2El   = document.querySelector(".orbit2");
+const orbit3El   = document.querySelector(".orbit3");
 
 if (!isMobile()) {
   window.addEventListener("scroll", rafThrottle(() => {
@@ -446,7 +396,6 @@ if (!isMobile()) {
     if (orbit2El)   orbit2El.style.transform   = `translate(${mx*10}px,${my*8}px)`;
     if (orbit3El)   orbit3El.style.transform   = `translate(${mx*15}px,${my*11}px)`;
   }, 20));
-
   heroSection?.addEventListener("mouseleave", () => {
     if (heroAvatar) heroAvatar.style.transform = "";
     if (orbit1El)   orbit1El.style.transform   = "";
@@ -456,14 +405,13 @@ if (!isMobile()) {
 }
 
 // ========================================
-// SPARK ON HERO HOVER — dimatikan di mobile
+// SPARK ON HERO HOVER (desktop only)
 // ========================================
 if (!isMobile()) {
-  const heroVisual = document.querySelector(".hero-visual");
+  const heroVisual  = document.querySelector(".hero-visual");
   const sparkColors = ["#ff7ac6","#8b5cf6","#6ee7ff","#fff","#ffb3e6","#c4b5fd"];
-
   heroVisual?.addEventListener("mousemove", throttle((e) => {
-    for (let i = 0; i < 4; i++) { // was 6
+    for (let i = 0; i < 4; i++) {
       const spark = document.createElement("div");
       spark.classList.add("spark");
       const angle = Math.random() * 360, dist = 30 + Math.random() * 50;
@@ -477,36 +425,29 @@ if (!isMobile()) {
       document.body.appendChild(spark);
       setTimeout(() => spark.remove(), 700);
     }
-  }, 60)); // throttle ke 60ms (was tanpa throttle)
+  }, 60));
 }
 
 // ========================================
-// TIMELINE DRAG + TOUCH SWIPE — dioptimasi
+// TIMELINE DRAG + TOUCH SWIPE
 // ========================================
 const slider = document.querySelector(".timeline-scroll");
 if (slider) {
   let isDragging = false, startX = 0, scrollLeft = 0;
   let velocity = 0, lastDragX = 0, momentumId;
-
   const stopMomentum = () => { cancelAnimationFrame(momentumId); velocity = 0; };
 
   slider.addEventListener("mousedown", (e) => {
-    isDragging = true;
-    slider.classList.add("dragging");
-    startX    = e.pageX - slider.offsetLeft;
-    scrollLeft = slider.scrollLeft;
-    lastDragX = e.pageX;
-    stopMomentum();
+    isDragging = true; slider.classList.add("dragging");
+    startX = e.pageX - slider.offsetLeft; scrollLeft = slider.scrollLeft;
+    lastDragX = e.pageX; stopMomentum();
   });
   slider.addEventListener("mouseleave", () => { isDragging = false; slider.classList.remove("dragging"); });
-  slider.addEventListener("mouseup",    () => {
-    isDragging = false;
-    slider.classList.remove("dragging");
-    // Momentum scroll setelah lepas
+  slider.addEventListener("mouseup", () => {
+    isDragging = false; slider.classList.remove("dragging");
     const startMomentum = () => {
       if (Math.abs(velocity) < 0.5) return;
-      slider.scrollLeft -= velocity;
-      velocity *= 0.92;
+      slider.scrollLeft -= velocity; velocity *= 0.92;
       momentumId = requestAnimationFrame(startMomentum);
     };
     startMomentum();
@@ -514,42 +455,30 @@ if (slider) {
   slider.addEventListener("mousemove", (e) => {
     if (!isDragging) return;
     e.preventDefault();
-    const x  = e.pageX - slider.offsetLeft;
-    const dx = x - startX;
-    velocity = e.pageX - lastDragX;
-    lastDragX = e.pageX;
-    slider.scrollLeft = scrollLeft - dx * 1.6;
+    const x = e.pageX - slider.offsetLeft;
+    velocity = e.pageX - lastDragX; lastDragX = e.pageX;
+    slider.scrollLeft = scrollLeft - (x - startX) * 1.6;
   });
 
-  // Touch swipe — lebih responsif
   let touchStartX = 0, touchScrollLeft = 0, touchVelocity = 0, lastTouchX = 0;
-
   slider.addEventListener("touchstart", (e) => {
-    touchStartX    = e.touches[0].clientX;
-    touchScrollLeft = slider.scrollLeft;
-    lastTouchX     = touchStartX;
-    touchVelocity  = 0;
-    stopMomentum();
+    touchStartX = e.touches[0].clientX; touchScrollLeft = slider.scrollLeft;
+    lastTouchX = touchStartX; touchVelocity = 0; stopMomentum();
   }, { passive: true });
-
   slider.addEventListener("touchmove", (e) => {
-    const tx     = e.touches[0].clientX;
-    touchVelocity = lastTouchX - tx;
-    lastTouchX   = tx;
+    const tx = e.touches[0].clientX;
+    touchVelocity = lastTouchX - tx; lastTouchX = tx;
     slider.scrollLeft = touchScrollLeft + (touchStartX - tx) * 1.1;
   }, { passive: true });
-
   slider.addEventListener("touchend", () => {
     const momentum = () => {
       if (Math.abs(touchVelocity) < 0.5) return;
-      slider.scrollLeft += touchVelocity;
-      touchVelocity *= 0.93;
+      slider.scrollLeft += touchVelocity; touchVelocity *= 0.93;
       momentumId = requestAnimationFrame(momentum);
     };
     momentum();
   }, { passive: true });
 
-  // Swipe hint di mobile
   if (window.innerWidth <= 768) {
     setTimeout(() => {
       slider.scrollBy({ left: 55, behavior: "smooth" });
@@ -591,8 +520,8 @@ function initGallery() {
 
   function openLightbox(i) {
     currentIndex = i;
-    lbImg.style.opacity = "0";
-    lbImg.src           = images[i].src;
+    lbImg.style.opacity   = "0";
+    lbImg.src             = images[i].src;
     lbCaption.textContent = images[i].caption;
     lb.classList.add("active");
     document.body.style.overflow = "hidden";
@@ -628,9 +557,9 @@ function initGallery() {
 initGallery();
 
 // ========================================
-// ACTIVE NAVBAR
+// ACTIVE NAVBAR LINK
 // ========================================
-const sections = document.querySelectorAll("section[id]");
+const sections    = document.querySelectorAll("section[id]");
 const navLinkList = document.querySelectorAll(".nav-links a");
 
 window.addEventListener("scroll", rafThrottle(() => {
@@ -645,7 +574,6 @@ window.addEventListener("scroll", rafThrottle(() => {
 
 // ========================================
 // COUNTER ANIMATION
-// Angka di about section naik dari 0 saat masuk viewport
 // ========================================
 function animateCounter(el, target, suffix, duration = 1600) {
   let start = null;
@@ -653,8 +581,7 @@ function animateCounter(el, target, suffix, duration = 1600) {
   const step = (timestamp) => {
     if (!start) start = timestamp;
     const progress = Math.min((timestamp - start) / duration, 1);
-    // Easing: ease-out cubic
-    const eased = 1 - Math.pow(1 - progress, 3);
+    const eased    = 1 - Math.pow(1 - progress, 3);
     el.textContent = Math.floor(eased * num) + suffix;
     if (progress < 1) requestAnimationFrame(step);
     else el.textContent = target + suffix;
@@ -664,15 +591,14 @@ function animateCounter(el, target, suffix, duration = 1600) {
 
 const statNums = document.querySelectorAll(".stat-num");
 let countersTriggered = false;
-
 const counterObs = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting && !countersTriggered) {
       countersTriggered = true;
       statNums.forEach((el, i) => {
-        const raw = el.textContent.trim();       // e.g. "6+"
-        const num = raw.replace(/\D/g, "");      // "6"
-        const suffix = raw.replace(/\d/g, "");   // "+"
+        const raw    = el.textContent.trim();
+        const num    = raw.replace(/\D/g, "");
+        const suffix = raw.replace(/\d/g, "");
         el.textContent = "0" + suffix;
         setTimeout(() => animateCounter(el, num, suffix, 1400), i * 180);
       });
@@ -680,39 +606,22 @@ const counterObs = new IntersectionObserver((entries) => {
     }
   });
 }, { threshold: 0.4 });
-
 if (statNums.length) counterObs.observe(statNums[0].closest(".about-stats") || statNums[0]);
 
 // ========================================
 // BUTTON RIPPLE EFFECT
-// Gelombang muncul dari titik klik di semua .btn
 // ========================================
 document.querySelectorAll(".btn").forEach(btn => {
   btn.addEventListener("click", function(e) {
-    // Hapus ripple lama kalau ada
     const old = this.querySelector(".ripple-wave");
     if (old) old.remove();
-
-    const rect = this.getBoundingClientRect();
-    const size = Math.max(rect.width, rect.height) * 2;
-    const x = e.clientX - rect.left - size / 2;
-    const y = e.clientY - rect.top  - size / 2;
-
+    const rect   = this.getBoundingClientRect();
+    const size   = Math.max(rect.width, rect.height) * 2;
+    const x      = e.clientX - rect.left - size / 2;
+    const y      = e.clientY - rect.top  - size / 2;
     const ripple = document.createElement("span");
-    ripple.className = "ripple-wave";
-    ripple.style.cssText = `
-      position: absolute;
-      width: ${size}px;
-      height: ${size}px;
-      left: ${x}px;
-      top: ${y}px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.25);
-      transform: scale(0);
-      animation: rippleAnim 0.6s cubic-bezier(.16,1,.3,1) forwards;
-      pointer-events: none;
-      z-index: 0;
-    `;
+    ripple.className    = "ripple-wave";
+    ripple.style.cssText = `position:absolute;width:${size}px;height:${size}px;left:${x}px;top:${y}px;border-radius:50%;background:rgba(255,255,255,0.25);transform:scale(0);animation:rippleAnim 0.6s cubic-bezier(.16,1,.3,1) forwards;pointer-events:none;z-index:0;`;
     this.style.position = "relative";
     this.style.overflow = "hidden";
     this.appendChild(ripple);
@@ -721,28 +630,29 @@ document.querySelectorAll(".btn").forEach(btn => {
 });
 
 // ========================================
-// FORM VALIDATION VISUAL
-// Shake + border merah + pesan error kalau input kosong
+// CONTACT FORM — FORMSPREE
 // ========================================
-const contactForm = document.getElementById("contactForm");
-if (contactForm) {
-  // Hapus handler lama, ganti yang baru
-  const newForm = contactForm.cloneNode(true);
-  contactForm.parentNode.replaceChild(newForm, contactForm);
+(function initContactForm() {
+  const form = document.getElementById("contactForm");
+  if (!form) return;
+
+  form.setAttribute("novalidate", "true");
+
+  const nameInput  = form.querySelector("input[type='text']");
+  const emailInput = form.querySelector("input[type='email']");
+  const msgInput   = form.querySelector("textarea");
+  const submitBtn  = form.querySelector("button[type='submit']");
 
   function showError(input, msg) {
-    input.classList.add("input-error");
-    input.classList.add("input-shake");
-    // Hapus shake setelah animasi selesai
+    input.classList.add("input-error", "input-shake");
     setTimeout(() => input.classList.remove("input-shake"), 500);
-
     let err = input.parentElement.querySelector(".err-msg");
     if (!err) {
       err = document.createElement("span");
       err.className = "err-msg";
       input.parentElement.appendChild(err);
     }
-    err.textContent = msg;
+    err.textContent   = msg;
     err.style.opacity = "1";
   }
 
@@ -752,48 +662,74 @@ if (contactForm) {
     if (err) err.style.opacity = "0";
   }
 
-  // Real-time clear error saat user mulai ngetik
-  newForm.querySelectorAll("input, textarea").forEach(input => {
-    input.addEventListener("input", () => clearError(input));
+  [nameInput, emailInput, msgInput].forEach(inp => {
+    if (inp) inp.addEventListener("input", () => clearError(inp));
   });
 
-  newForm.addEventListener("submit", (e) => {
+  function setBtnState(state, origText) {
+    const states = {
+      loading: { text: "⏳ Sending...",       bg: "",                                        disabled: true,  opacity: "0.8" },
+      success: { text: "✓ Message Sent!",     bg: "linear-gradient(135deg,#10b981,#059669)", disabled: true,  opacity: "1"   },
+      error:   { text: "✗ Failed, try again", bg: "linear-gradient(135deg,#ef4444,#dc2626)", disabled: false, opacity: "1"   },
+      reset:   { text: origText,              bg: "",                                        disabled: false, opacity: "1"   },
+    };
+    const s = states[state];
+    submitBtn.textContent      = s.text;
+    submitBtn.style.background = s.bg;
+    submitBtn.style.opacity    = s.opacity;
+    submitBtn.disabled         = s.disabled;
+  }
+
+  form.addEventListener("submit", function(e) {
     e.preventDefault();
+    e.stopPropagation();
+
     let valid = true;
 
-    const nameInput  = newForm.querySelector("input[type='text']");
-    const emailInput = newForm.querySelector("input[type='email']");
-    const msgInput   = newForm.querySelector("textarea");
-
     if (!nameInput.value.trim()) {
-      showError(nameInput, "Nama tidak boleh kosong");
-      valid = false;
+      showError(nameInput, "Name is required"); valid = false;
     }
     if (!emailInput.value.trim()) {
-      showError(emailInput, "Email tidak boleh kosong");
-      valid = false;
+      showError(emailInput, "Email is required"); valid = false;
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value)) {
-      showError(emailInput, "Format email tidak valid");
-      valid = false;
+      showError(emailInput, "Invalid email format"); valid = false;
     }
     if (!msgInput.value.trim()) {
-      showError(msgInput, "Pesan tidak boleh kosong");
-      valid = false;
+      showError(msgInput, "Message is required"); valid = false;
     }
 
-    if (valid) {
-      // Success state pada button
-      const btn = newForm.querySelector("button[type='submit']");
-      const orig = btn.textContent;
-      btn.textContent = "✓ Pesan Terkirim!";
-      btn.style.background = "linear-gradient(135deg, #10b981, #059669)";
-      btn.disabled = true;
-      newForm.reset();
-      setTimeout(() => {
-        btn.textContent = orig;
-        btn.style.background = "";
-        btn.disabled = false;
-      }, 3000);
-    }
+    if (!valid) return;
+
+    const origText = submitBtn.textContent;
+    setBtnState("loading", origText);
+
+    const payload = {
+      name:    nameInput.value.trim(),
+      email:   emailInput.value.trim(),
+      message: msgInput.value.trim()
+    };
+
+    fetch("https://formspree.io/f/mojbypwv", {
+      method:  "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body:    JSON.stringify(payload)
+    })
+    .then(res => {
+      if (res.ok) {
+        setBtnState("success", origText);
+        form.reset();
+        [nameInput, emailInput, msgInput].forEach(inp => clearError(inp));
+        setTimeout(() => setBtnState("reset", origText), 3500);
+      } else {
+        throw new Error("Server error " + res.status);
+      }
+    })
+    .catch(err => {
+      console.warn("Form send error:", err.message);
+      setBtnState("error", origText);
+      setTimeout(() => setBtnState("reset", origText), 3500);
+    });
+
+    return false;
   });
-}
+})();

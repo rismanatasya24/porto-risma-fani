@@ -60,7 +60,7 @@ img { max-width: 100%; height: auto; display: block; }
 a   { color: inherit; text-decoration: none; }
 
 /* ========================================
-   GPU ACCELERATION — hanya elemen yang perlu
+   GPU ACCELERATION
 ======================================== */
 .hero-avatar,
 .hero-visual,
@@ -126,7 +126,7 @@ h2, h3,
 .loader-text p { font-family: 'Syne', sans-serif; letter-spacing: 4px; }
 
 /* ========================================
-   BACKGROUND — FIX: hapus blur berlapis
+   BACKGROUND
 ======================================== */
 .gradient-bg {
   position: fixed;
@@ -153,15 +153,13 @@ h2, h3,
   width: 900px; height: 900px;
   background: radial-gradient(circle, rgba(255,0,170,.18), transparent 60%);
   top: -20%; left: -10%;
-  /* DIHAPUS: filter blur pada pseudo-element → sangat berat di mobile */
   animation: nebulaFloat 20s ease-in-out infinite alternate;
 }
 
-@keyframes bgShift   { from { transform: scale(1); }   to { transform: scale(1.06); } }
-@keyframes galaxyZoom{ from { transform: scale(1) translateY(0); } to { transform: scale(1.1) translateY(-30px); } }
+@keyframes bgShift    { from { transform: scale(1); }   to { transform: scale(1.06); } }
+@keyframes galaxyZoom { from { transform: scale(1) translateY(0); } to { transform: scale(1.1) translateY(-30px); } }
 @keyframes nebulaFloat{ from { transform: translate(0,0); } to { transform: translate(100px,-60px); } }
 
-/* CANVAS */
 #galaxy-network {
   position: fixed;
   inset: 0;
@@ -171,7 +169,6 @@ h2, h3,
   opacity: .5;
 }
 
-/* STARS */
 .stars,
 .stars::before,
 .stars::after {
@@ -189,7 +186,6 @@ h2, h3,
 .stars::after  { background-size: 180px 180px; opacity: .07; animation-duration: 180s; }
 @keyframes starsMove { from { transform: translateY(0); } to { transform: translateY(-1200px); } }
 
-/* SHOOTING STARS */
 .shooting-stars { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: -11; }
 .shooting-stars::before,
 .shooting-stars::after {
@@ -208,7 +204,6 @@ h2, h3,
   100% { transform: translateX(140vw) translateY(40vh) rotate(25deg); opacity: 0; }
 }
 
-/* FILM GRAIN — FIX: diperlambat drastis (was 0.15s → 2s) & opacity dikurangi */
 body::after {
   content: '';
   position: fixed;
@@ -218,7 +213,7 @@ body::after {
   opacity: 0.02;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   background-size: 200px 200px;
-  animation: grainShift 3s steps(4) infinite; /* was 0.15s steps(1) → 20x lebih ringan */
+  animation: grainShift 3s steps(4) infinite;
   mix-blend-mode: overlay;
 }
 @keyframes grainShift {
@@ -263,7 +258,6 @@ body::after {
   width: 520px; height: 520px;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(255,0,170,.22), transparent 70%);
-  /* DIHAPUS: filter blur — berat di loader */
   animation: loaderPulse 4s ease-in-out infinite;
 }
 .loader-text {
@@ -354,7 +348,7 @@ body::after {
   height: 100%; width: 0%;
   background: linear-gradient(90deg, #ff7ac6, #8b5cf6, #6ee7ff);
   border-radius: 999px;
-  animation: loaderFill 2s cubic-bezier(.22,1,.36,1) forwards .3s; /* dipercepat was 2.4s */
+  animation: loaderFill 2s cubic-bezier(.22,1,.36,1) forwards .3s;
 }
 .loader-progress-text { font-family: 'Syne', sans-serif; font-size: 11px; letter-spacing: 3px; color: rgba(255,255,255,.4); }
 
@@ -584,11 +578,8 @@ body::after {
 @keyframes avatarFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-16px); } }
 
 /* ========================================
-   REVEAL ANIMATIONS — SMOOTH & WOW
-   Pure opacity + transform, aman di semua elemen
+   REVEAL ANIMATIONS
 ======================================== */
-
-/* Base .reveal — fade + slide up */
 .reveal {
   opacity: 0;
   transform: translateY(44px);
@@ -596,12 +587,8 @@ body::after {
     opacity 1s cubic-bezier(.16,1,.3,1),
     transform 1s cubic-bezier(.16,1,.3,1);
 }
-.reveal.active {
-  opacity: 1;
-  transform: translateY(0);
-}
+.reveal.active { opacity: 1; transform: translateY(0); }
 
-/* reveal-left — slide dari kiri + sedikit scale */
 .reveal-left {
   opacity: 0;
   transform: translateX(-60px) scale(.97) rotateY(4deg);
@@ -610,12 +597,8 @@ body::after {
     transform 1.1s cubic-bezier(.16,1,.3,1);
   transform-origin: left center;
 }
-.reveal-left.active {
-  opacity: 1;
-  transform: translateX(0) scale(1) rotateY(0deg);
-}
+.reveal-left.active { opacity: 1; transform: translateX(0) scale(1) rotateY(0deg); }
 
-/* reveal-right — slide dari kanan + sedikit scale */
 .reveal-right {
   opacity: 0;
   transform: translateX(60px) scale(.97) rotateY(-4deg);
@@ -624,12 +607,8 @@ body::after {
     transform 1.1s cubic-bezier(.16,1,.3,1);
   transform-origin: right center;
 }
-.reveal-right.active {
-  opacity: 1;
-  transform: translateX(0) scale(1) rotateY(0deg);
-}
+.reveal-right.active { opacity: 1; transform: translateX(0) scale(1) rotateY(0deg); }
 
-/* reveal-up — naik + scale kecil */
 .reveal-up {
   opacity: 0;
   transform: translateY(56px) scale(.96);
@@ -637,12 +616,8 @@ body::after {
     opacity 1s cubic-bezier(.16,1,.3,1),
     transform 1s cubic-bezier(.16,1,.3,1);
 }
-.reveal-up.active {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
+.reveal-up.active { opacity: 1; transform: translateY(0) scale(1); }
 
-/* reveal-zoom — muncul dari tengah, scale + fade */
 .reveal-zoom {
   opacity: 0;
   transform: scale(.82) translateY(30px);
@@ -650,24 +625,21 @@ body::after {
     opacity 1.1s cubic-bezier(.16,1,.3,1),
     transform 1.1s cubic-bezier(.16,1,.3,1);
 }
-.reveal-zoom.active {
-  opacity: 1;
-  transform: scale(1) translateY(0);
-}
+.reveal-zoom.active { opacity: 1; transform: scale(1) translateY(0); }
 
-/* Desktop: tambah perspective agar rotateY keliatan */
 @media (min-width: 901px) {
   .reveal-left,
-  .reveal-right {
-    perspective: 800px;
-  }
+  .reveal-right { perspective: 800px; }
 }
 
 /* ========================================
    SECTION TITLES
 ======================================== */
 .section-title { text-align: center; margin-bottom: 70px; }
-.section-title p { font-family: 'Syne', sans-serif; font-size: 12px; letter-spacing: 5px; text-transform: uppercase; color: var(--primary); margin-bottom: 12px; opacity: .85; }
+.section-title p {
+  font-family: 'Syne', sans-serif; font-size: 12px; letter-spacing: 5px;
+  text-transform: uppercase; color: var(--primary); margin-bottom: 12px; opacity: .85;
+}
 .section-title h2 {
   font-family: 'Cormorant Garamond', serif; font-size: 46px; font-weight: 400; font-style: italic;
   background: linear-gradient(135deg, #fff 30%, #ff7ac6 70%, #6ee7ff 100%);
@@ -698,7 +670,7 @@ body::after {
 .about-content {
   background: linear-gradient(145deg, rgba(255,255,255,.075), rgba(255,255,255,.025));
   border: 1px solid rgba(255,255,255,.1);
-  backdrop-filter: blur(24px); /* dikurangi was 30px */
+  backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   padding: 52px; border-radius: 40px;
   position: relative; overflow: hidden;
@@ -710,7 +682,13 @@ body::after {
 .about-content::after  { content: ''; position: absolute; bottom: -100px; right: -100px; width: 240px; height: 240px; border-radius: 50%; background: radial-gradient(circle, rgba(255,0,170,.14), transparent 70%); opacity: 0; transition: opacity .5s ease; }
 
 .about-label { font-family: 'Syne', sans-serif; font-size: 11px; letter-spacing: 5px; text-transform: uppercase; color: var(--primary); margin-bottom: 18px; opacity: .9; }
-.about-title { font-family: 'Cormorant Garamond', serif !important; font-size: 38px !important; font-weight: 600 !important; font-style: italic !important; line-height: 1.1 !important; margin-bottom: 26px !important; background: linear-gradient(to right, #fff, #ff7ac6, #6ee7ff); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.about-title {
+  font-family: 'Cormorant Garamond', serif !important; font-size: 38px !important;
+  font-weight: 600 !important; font-style: italic !important; line-height: 1.1 !important;
+  margin-bottom: 26px !important;
+  background: linear-gradient(to right, #fff, #ff7ac6, #6ee7ff);
+  background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
 .about-line { width: 80px; height: 3px; border-radius: 100px; background: linear-gradient(90deg, var(--primary), var(--secondary)); margin-bottom: 28px; }
 .about-content p { font-size: 15px; line-height: 2; color: var(--muted); }
 .about-quote { margin-top: 26px; font-size: 14px; font-style: italic; letter-spacing: .5px; line-height: 1.9; color: #f9a8d4; opacity: .75; padding-left: 16px; border-left: 2px solid rgba(255,122,198,.3); }
@@ -739,7 +717,7 @@ body::after {
   border-radius: 22px;
   background: linear-gradient(145deg, rgba(255,255,255,.07), rgba(255,255,255,.02));
   border: 1px solid rgba(255,255,255,.08);
-  backdrop-filter: blur(12px); /* dikurangi was 18px */
+  backdrop-filter: blur(12px);
   transition: transform .5s cubic-bezier(.22,1,.36,1), border-color .5s ease, background .5s ease, box-shadow .5s ease;
   cursor: default;
 }
@@ -770,7 +748,6 @@ body::after {
 .timeline-scroll {
   overflow-x: auto; overflow-y: hidden; width: 100%; padding-bottom: 40px;
   -webkit-overflow-scrolling: touch; cursor: grab;
-  /* FIX: contain mengurangi repaint area */
   contain: layout paint style;
 }
 .timeline-scroll:active { cursor: grabbing; }
@@ -814,8 +791,7 @@ body::after {
 .journey-item:first-child .journey-card span::before { background: #6ee7b7; box-shadow: 0 0 6px #6ee7b7; }
 
 /* ========================================
-   STAGGER DOMINO — portfolio & gallery cards
-   Muncul satu-satu bergantian kayak domino
+   STAGGER DOMINO
 ======================================== */
 .stagger-card {
   opacity: 0;
@@ -824,32 +800,21 @@ body::after {
   transition:
     opacity .7s cubic-bezier(.16,1,.3,1),
     transform .7s cubic-bezier(.16,1,.3,1);
-  /* Delay dari --i, tiap card beda 110ms */
   transition-delay: calc(var(--i, 0) * 110ms);
   will-change: opacity, transform;
   backface-visibility: hidden;
 }
-
-.stagger-card.active {
-  opacity: 1;
-  transform: translateY(0) scale(1) rotateX(0deg);
-}
-
-/* Mobile: efek lebih simpel biar ga lag */
-@media (max-width: 900px) {
-  .stagger-card {
-    transform: translateY(36px) scale(.96);
-    transition-delay: calc(var(--i, 0) * 80ms);
-  }
-  .stagger-card.active {
-    transform: translateY(0) scale(1);
-  }
-}
+.stagger-card.active { opacity: 1; transform: translateY(0) scale(1) rotateX(0deg); }
 
 /* ========================================
-   PORTFOLIO
+   PORTFOLIO — BASE (Desktop: 3 kolom)
 ======================================== */
-.portfolio-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; margin-top: 60px; }
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 60px;
+}
 
 .portfolio-card {
   overflow: hidden; border-radius: 26px;
@@ -873,19 +838,12 @@ body::after {
   border-color: rgba(255,122,198,.22);
   box-shadow: 0 28px 70px rgba(255,0,170,.16), 0 8px 20px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.07);
 }
-
-/* Foto */
 .portfolio-card img {
   width: 100%; height: 200px; object-fit: cover; display: block;
   transition: transform .8s cubic-bezier(.16,1,.3,1), filter .6s ease;
   filter: brightness(.85) saturate(1.1);
 }
-.portfolio-card:hover img {
-  transform: scale(1.07);
-  filter: brightness(1) saturate(1.25);
-}
-
-/* Konten */
+.portfolio-card:hover img { transform: scale(1.07); filter: brightness(1) saturate(1.25); }
 .portfolio-content { padding: 20px; }
 .portfolio-content h3 {
   font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 700; margin-bottom: 8px;
@@ -897,7 +855,6 @@ body::after {
   transition: color .4s ease;
 }
 .portfolio-card:hover .portfolio-content p { color: rgba(255,255,255,.7); }
-
 .portfolio-tags { display: flex; flex-wrap: wrap; gap: 8px; }
 .portfolio-tags span {
   border-radius: 999px; padding: 5px 12px;
@@ -910,6 +867,11 @@ body::after {
   background: rgba(255,122,198,.18);
   border-color: rgba(255,122,198,.32);
   color: #ffc8e8;
+}
+
+/* Desktop mid-size: 2 kolom */
+@media (min-width: 901px) and (max-width: 1100px) {
+  .portfolio-grid { grid-template-columns: repeat(2,1fr); }
 }
 
 /* ========================================
@@ -929,7 +891,6 @@ body::after {
 .gallery-item:hover { transform: translateY(-10px) scale(1.02); box-shadow: 0 30px 60px rgba(255,0,170,.18), 0 10px 30px rgba(0,0,0,.45); }
 .gallery-item:hover img  { transform: scale(1.08); filter: brightness(.95); }
 .gallery-item:hover::after { opacity: 1; }
-
 .gallery-overlay {
   position: absolute; bottom: 0; left: 0; width: 100%;
   padding: 24px 22px 20px; z-index: 2;
@@ -940,7 +901,6 @@ body::after {
 .gallery-caption { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; color: #fff; line-height: 1.25; letter-spacing: .3px; text-shadow: 0 0 20px rgba(255,122,198,.6), 0 2px 8px rgba(0,0,0,.8); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .gallery-zoom-icon { position: absolute; top: 20px; right: 20px; width: 46px; height: 46px; border-radius: 50%; background: rgba(255,255,255,.12); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; color: white; z-index: 3; opacity: 0; transform: translateY(-10px); transition: opacity .5s ease, transform .5s ease; }
 .gallery-item:hover .gallery-zoom-icon { opacity: 1; transform: translateY(0); }
-
 .gallery-item:nth-child(1) { grid-column: span 7; height: 320px; }
 .gallery-item:nth-child(2) { grid-column: span 5; height: 320px; }
 .gallery-item:nth-child(3) { grid-column: span 4; height: 260px; }
@@ -1090,7 +1050,7 @@ body.light .custom-cursor { background: radial-gradient(circle, #111, #d946a8 45
 body.light .cursor-ring { border-color: rgba(0,0,0,.2); }
 
 /* ========================================
-   RESPONSIVE — DESKTOP
+   DESKTOP >= 901px
 ======================================== */
 @media (min-width: 901px) {
   .nav-links {
@@ -1116,14 +1076,13 @@ body.light .cursor-ring { border-color: rgba(0,0,0,.2); }
 }
 
 /* ========================================
-   RESPONSIVE — MOBILE
+   MOBILE <= 900px
 ======================================== */
 @media (max-width: 900px) {
   html { overflow-x: hidden; }
   body { overflow-x: clip; cursor: auto; }
   .custom-cursor, .cursor-ring { display: none; }
 
-  /* Matikan animasi berat di mobile */
   .gradient-bg::before { animation: none; }
   .gradient-bg { animation: none; }
   body::after { animation: none; opacity: 0.015; }
@@ -1199,7 +1158,25 @@ body.light .cursor-ring { border-color: rgba(0,0,0,.2); }
   .tech-card { flex-basis: clamp(120px,36vw,155px); min-width: clamp(120px,36vw,155px); padding: 22px 16px; }
   .tech-card i { font-size: 40px; }
   .soft-skills-wrapper { padding: 10px 5vw 70px; }
-  .portfolio-grid { grid-template-columns: 1fr; gap: 20px; }
+
+  /* PORTFOLIO MOBILE: 1 kolom full card seperti screenshot */
+  .portfolio-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-top: 36px;
+  }
+  .portfolio-card img { height: 200px; }
+  .portfolio-content { padding: 18px 20px 20px; }
+  .portfolio-content h3 { font-size: 16px; margin-bottom: 8px; }
+  .portfolio-content p  { font-size: 13px; line-height: 1.65; margin-bottom: 14px; }
+  .portfolio-tags { gap: 6px; }
+  .portfolio-tags span { font-size: 11px; padding: 5px 12px; }
+
+  .stagger-card {
+    transform: translateY(36px) scale(.96);
+    transition-delay: calc(var(--i, 0) * 80ms);
+  }
+  .stagger-card.active { transform: translateY(0) scale(1); }
 
   #timeline { padding: 44px 0 70px; }
   .timeline-hint { padding: 0 16px; font-size: 10px; letter-spacing: 2.5px; margin-top: 14px; margin-bottom: 70px; }
@@ -1207,7 +1184,10 @@ body.light .cursor-ring { border-color: rgba(0,0,0,.2); }
 
   .gallery-section { padding: 40px 4vw 55px; }
   .gallery-grid { display: flex; flex-direction: column; gap: 14px; margin-top: 40px; }
-  .gallery-item { width: 100% !important; height: 220px !important; min-height: 220px; border-radius: 20px; transform: none !important; }
+  .gallery-item {
+    width: 100% !important; height: 220px !important;
+    min-height: 220px; border-radius: 20px;
+  }
   .gallery-item:nth-child(1) { height: 260px !important; }
   .gallery-item:nth-child(6) { height: 280px !important; }
   .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
@@ -1225,7 +1205,6 @@ body.light .cursor-ring { border-color: rgba(0,0,0,.2); }
   .contact-item { gap: 12px; word-break: break-word; }
   .footer { padding: 28px 16px; }
 
-  /* REDUCE MOTION DI MOBILE — animasi orbit tetap tapi lebih lambat */
   .orbit1 { animation-duration: 16s; }
   .orbit2 { animation-duration: 26s; }
   .orbit3 { animation-duration: 38s; }
@@ -1234,6 +1213,9 @@ body.light .cursor-ring { border-color: rgba(0,0,0,.2); }
   .orbit-c { animation-duration: 30s; }
 }
 
+/* ========================================
+   SMALL MOBILE <= 600px
+======================================== */
 @media (max-width: 600px) {
   .section { padding: 54px 16px; }
   .hero { padding: 90px 16px 50px; gap: 24px; }
@@ -1264,23 +1246,52 @@ body.light .cursor-ring { border-color: rgba(0,0,0,.2); }
   .theme-toggle { left: 10px; width: 38px; height: 38px; }
   .menu-toggle  { right: 10px; width: 38px; height: 38px; border-radius: 12px; }
   .nav-links    { top: calc(100% + 8px); padding: 12px; max-height: calc(100dvh - 78px); }
+
+  /* Portfolio tetap 1 kolom di layar kecil */
+  .portfolio-grid { gap: 16px; }
+  .portfolio-card img { height: 180px; }
+  .portfolio-content { padding: 16px; }
+  .portfolio-content h3 { font-size: 15px; }
+  .portfolio-content p  { font-size: 12px; }
 }
 
-@media (min-width: 901px) and (max-width: 1100px) {
-  .portfolio-grid { grid-template-columns: repeat(2,1fr); }
+/* ========================================
+   TABLET <= 768px
+======================================== */
+@media (max-width: 768px) {
+  .hero { padding: 100px 6vw 56px; gap: 28px; }
+  .hero h1 { font-size: clamp(34px,10vw,48px); }
+  .about-grid { gap: 28px; }
+  .about-content { padding: 26px 18px; }
+  .about-stats { grid-template-columns: repeat(2,1fr); }
+  .contact-layout { grid-template-columns: 1fr; gap: 18px; }
+  .contact-info, .contact-box { padding: 24px 18px; }
+  .section-title h2 { font-size: clamp(26px,7vw,36px); }
+  .gallery-section { padding: 40px 4vw 50px; }
+  .gallery-grid { display: flex; flex-direction: column; gap: 14px; margin-top: 36px; }
+  .gallery-item { width: 100% !important; height: 220px !important; border-radius: 20px; }
+  .gallery-item:nth-child(1) { height: 260px !important; }
+  .gallery-item:nth-child(6) { height: 280px !important; }
+  .tech-card { flex-basis: clamp(115px,32vw,148px); min-width: clamp(115px,32vw,148px); }
+  .soft-skills-wrapper { padding: 10px 4vw 60px; }
+  .timeline-section { padding: 80px 0 60px; }
 }
 
-/* Ripple animation keyframe */
+/* ========================================
+   RIPPLE
+======================================== */
 @keyframes rippleAnim {
   0%   { transform: scale(0); opacity: 1; }
   100% { transform: scale(1); opacity: 0; }
 }
 
-/* Form error state */
+/* ========================================
+   FORM ERROR
+======================================== */
 .input-error {
-  border-color: rgba(220, 60, 60, .55) !important;
-  background: rgba(220, 60, 60, .04) !important;
-  box-shadow: 0 0 0 3px rgba(220, 60, 60, .1) !important;
+  border-color: rgba(220,60,60,.55) !important;
+  background: rgba(220,60,60,.04) !important;
+  box-shadow: 0 0 0 3px rgba(220,60,60,.1) !important;
 }
 .err-msg {
   display: block;
@@ -1291,8 +1302,6 @@ body.light .cursor-ring { border-color: rgba(0,0,0,.2); }
   opacity: 0;
   transition: opacity .3s ease;
 }
-
-/* Shake animation saat validasi gagal */
 @keyframes shakeInput {
   0%,100% { transform: translateX(0); }
   20%      { transform: translateX(-7px); }
@@ -1305,31 +1314,12 @@ body.light .cursor-ring { border-color: rgba(0,0,0,.2); }
 }
 
 /* ========================================
-   TABLET BREAKPOINT — 768px
+   REDUCE MOTION
 ======================================== */
-@media (max-width: 768px) {
-  .hero { padding: 100px 6vw 56px; gap: 28px; }
-  .hero h1 { font-size: clamp(34px,10vw,48px); }
-  .about-grid { gap: 28px; }
-  .about-content { padding: 26px 18px; }
-  .about-stats { grid-template-columns: repeat(2,1fr); }
-  .portfolio-grid { grid-template-columns: repeat(2,1fr); gap: 16px; }
-  .contact-layout { grid-template-columns: 1fr; gap: 18px; }
-  .contact-info, .contact-box { padding: 24px 18px; }
-  .section-title h2 { font-size: clamp(26px,7vw,36px); }
-  .gallery-section { padding: 40px 4vw 50px; }
-  .gallery-grid {
-    display: flex; flex-direction: column; gap: 14px; margin-top: 36px;
-  }
-  .gallery-item { width: 100% !important; height: 220px !important; border-radius: 20px; }
-  .gallery-item:nth-child(1) { height: 260px !important; }
-  .gallery-item:nth-child(6) { height: 280px !important; }
-  .tech-card { flex-basis: clamp(115px,32vw,148px); min-width: clamp(115px,32vw,148px); }
-  .soft-skills-wrapper { padding: 10px 4vw 60px; }
-  .timeline-section { padding: 80px 0 60px; }
-}
-
-/* Respect prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
 }
