@@ -751,7 +751,7 @@ document.querySelectorAll(".btn").forEach(btn => {
       loader.style.opacity    = '0';
       setTimeout(() => loader.remove(), 600);
       document.body.classList.remove('loading');
-    }, 1600); // dari 2400ms → 1600ms
+    }, 2200); 
   }
   const heavy = [
     '.loader-ring-2',
@@ -779,4 +779,28 @@ document.querySelectorAll(".btn").forEach(btn => {
   `;
   document.head.appendChild(style);
 
+})();
+(function staggerCards() {
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const card  = entry.target;
+        const index = parseInt(card.dataset.staggerIndex || 0);
+        setTimeout(() => {
+          card.style.opacity   = '1';
+          card.style.transform = 'translateY(0) scale(1)';
+        }, index * 150);
+        obs.unobserve(card);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  [...document.querySelectorAll('.portfolio-card, .gallery-item')]
+    .forEach((card, i) => {
+      card.dataset.staggerIndex  = i;
+      card.style.opacity         = '0';
+      card.style.transform       = 'translateY(40px) scale(0.97)';
+      card.style.transition      = 'opacity 0.6s ease, transform 0.6s ease';
+      obs.observe(card);
+    });
 })();
